@@ -8,12 +8,14 @@ export interface DotProps {
   value: number;
   style?: React.CSSProperties | ((dotValue: number) => React.CSSProperties);
   activeStyle?: React.CSSProperties | ((dotValue: number) => React.CSSProperties);
+  dotTooltip?: React.ReactNode;
 }
 
 const Dot: React.FC<DotProps> = (props) => {
-  const { prefixCls, value, style, activeStyle } = props;
+  const { prefixCls, value, style, activeStyle, dotTooltip } = props;
   const { min, max, direction, included, includedStart, includedEnd } =
     React.useContext(SliderContext);
+  const [isTooltipVisible, setIsTooltipVisible] = React.useState(false);
 
   const dotClassName = `${prefixCls}-dot`;
   const active = included && includedStart <= value && value <= includedEnd;
@@ -29,6 +31,19 @@ const Dot: React.FC<DotProps> = (props) => {
       ...mergedStyle,
       ...(typeof activeStyle === 'function' ? activeStyle(value) : activeStyle),
     };
+  }
+
+  if (dotTooltip) {
+    return (
+      <span
+        className={classNames(dotClassName, { [`${dotClassName}-active`]: active })}
+        style={mergedStyle}
+        onMouseEnter={() => setIsTooltipVisible(true)}
+        onMouseLeave={() => setIsTooltipVisible(false)}
+      >
+        {isTooltipVisible && dotTooltip}
+      </span>
+    )
   }
 
   return (

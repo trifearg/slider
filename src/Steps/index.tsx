@@ -7,12 +7,13 @@ export interface StepsProps {
   prefixCls: string;
   marks: InternalMarkObj[];
   dots?: boolean;
+  dotTooltip?: React.ReactNode;
   style?: React.CSSProperties | ((dotValue: number) => React.CSSProperties);
   activeStyle?: React.CSSProperties | ((dotValue: number) => React.CSSProperties);
 }
 
 const Steps: React.FC<StepsProps> = (props) => {
-  const { prefixCls, marks, dots, style, activeStyle } = props;
+  const { prefixCls, marks, dots, style, activeStyle, dotTooltip } = props;
   const { min, max, step } = React.useContext(SliderContext);
 
   const stepDots = React.useMemo<number[]>(() => {
@@ -44,6 +45,7 @@ const Steps: React.FC<StepsProps> = (props) => {
           value={dotValue}
           style={style}
           activeStyle={activeStyle}
+          dotTooltip={dotTooltip}
         />
       ))}
     </div>

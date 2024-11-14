@@ -101,6 +101,7 @@ export interface SliderProps<ValueType = number | number[]> {
 
   // Decorations
   marks?: Record<string | number, React.ReactNode | MarkObj>;
+  dotTooltip?: React.ReactNode;
   dots?: boolean;
 
   // Components
@@ -170,6 +171,7 @@ const Slider = React.forwardRef<SliderRef, SliderProps<number | number[]>>((prop
     // Decorations
     marks,
     dots,
+    dotTooltip,
 
     // Components
     handleRender,
@@ -600,6 +602,7 @@ const Slider = React.forwardRef<SliderRef, SliderProps<number | number[]>>((prop
           prefixCls={prefixCls}
           marks={markList}
           dots={dots}
+          dotTooltip={dotTooltip}
           style={dotStyle}
           activeStyle={activeDotStyle}
         />
